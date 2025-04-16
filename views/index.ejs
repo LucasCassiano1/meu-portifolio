@@ -1,0 +1,77 @@
+<%- include('partials/header', { titulo: 'Portfólio Acadêmico' }) %>
+
+<main>
+  <section class="card-section">
+    <h2>Sobre Mim</h2>
+    <p><strong>Nome:</strong> <%= nome %></p>
+    <p><strong>Idade:</strong> <%= idade %> anos</p>
+    <p><strong>Email:</strong> <%= email %></p>
+    <p>
+      <a href="<%= github %>" target="_blank" class="botao-link">🔗 GitHub</a>
+      <a href="<%= linkedin %>" target="_blank" class="botao-link">🔗 LinkedIn</a>
+    </p>
+  </section>
+
+  <section class="card-section">
+    <h2>Objetivo</h2>
+    <p>
+      Aplicar minhas habilidades em desenvolvimento de software e análise de sistemas em projetos desafiadores, contribuindo para soluções eficientes e inovadoras, enquanto continuo evoluindo profissionalmente no mercado de Tecnologia da Informação.
+    </p>
+  </section>
+
+  <section class="card-section">
+    <h2>Formação Acadêmica</h2>
+    <p>FATEC São José dos Campos – Tecnólogo em Análise e Desenvolvimento de Sistemas</p>
+    <p><strong>Início:</strong> Julho/2023 | <strong>Previsão de Conclusão:</strong> Dezembro/2026</p>
+  </section>
+
+  <section class="card-section">
+    <h2>Experiência Profissional</h2>
+
+    <h3>Hunt Sales, SJC - SP (Fev/2025 - Abr/2025) – Estágio em Programação</h3>
+    <ul>
+      <li>Apoiei a equipe na análise e otimização de processos internos</li>
+      <li>Participei da criação de metodologias de melhoria contínua</li>
+      <li>Atuei como suporte para os clientes</li>
+      <li>Utilizei N8N, Python, JavaScript, APIs, webhooks e automatizadores</li>
+    </ul>
+
+    <h3>Freelancer, SJC-SP (Jul/2024 - Jan/2025) – Desenvolvedor Front-end</h3>
+    <ul>
+      <li>Criação de sites e aplicações web com React, JS, HTML e CSS</li>
+    </ul>
+
+    <h3>Paraifer Ltda, SJC-SP (2019 - 2021) – Vendedor e Operador de Caixa</h3>
+    <ul>
+      <li>Gerenciamento de estoque e atendimento ao cliente</li>
+    </ul>
+  </section>
+
+  <section class="card-section">
+    <h2>Tecnologias</h2>
+    <ul>
+      <li><strong>Linguagens:</strong> JavaScript/TypeScript, HTML, CSS, Python, Java</li>
+      <li><strong>Bibliotecas:</strong> React, Node.js, Express.js</li>
+      <li><strong>Ferramentas:</strong> MySQL, Git/GitHub, Excel, n8n, Figma</li>
+    </ul>
+  </section>
+
+  <section class="card-section">
+    <h2>Idiomas</h2>
+    <p>Inglês Intermediário (B1) – leitura, escrita e conversação</p>
+  </section>
+
+  <section class="card-section">
+    <h2>Certificações e Cursos</h2>
+    <ul>
+      <li>React – Matheus Battisti (Hora de Codar) – Em andamento (2025)</li>
+      <li>JavaScript (40h) – Curso em Vídeo (2024)</li>
+      <li>Python 3: Do Básico ao Avançado – Udemy (2023)</li>
+      <li>Excel Intermediário – Fundação Bradesco e FATEC (2023)</li>
+      <li>Inglês Intermediário – CEL, FATEC (2022–2023)</li>
+      <li>Montagem e Manutenção de Computadores – Advanced (2022)</li>
+    </ul>
+  </section>
+</main>
+
+<%- include('partials/footer') %>
