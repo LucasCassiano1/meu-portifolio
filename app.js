@@ -43,7 +43,8 @@ app.get('/projetos', (req, res) => {
     },
     {
       nome: "IA para consultas em banco de dados",
-      descricao: "Este projeto consiste em uma IA desenvolvida em Python integrada ao Telegram. Através de um bot, o usuário podia enviar perguntas utilizando linguagem natural, e a IA realizava buscas em sites específicos da internet para responder diretamente no chat. A proposta visava facilitar o acesso a informações de forma rápida, simulando uma conversa inteligente via Telegram."
+      descricao: "Este projeto consiste em uma IA desenvolvida em Python integrada ao Telegram. Através de um bot, o usuário podia enviar perguntas utilizando linguagem natural, e a IA realizava buscas em sites específicos da internet para responder diretamente no chat. A proposta visava facilitar o acesso a informações de forma rápida, simulando uma conversa inteligente via Telegram.",
+      github: "https://github.com/LucasCassiano1/bertoti-IHC"
     },
     {
       nome: "Plataforma para feedback organizacional",
