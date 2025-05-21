@@ -1,70 +1,284 @@
-// app.js
 const express = require('express');
+const session = require('express-session');
+const fs = require('fs');
+const path = require('path');
+
 const app = express();
 const port = 3000;
 
 app.set('view engine', 'ejs');
-
 app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
+app.use(session({ secret: 'senhaSegura123', resave: false, saveUninitialized: true }));
+
+const dataPath = path.join(__dirname, 'data', 'portfolio.json');
 
 function calcularIdade(dataNascimento) {
   const hoje = new Date();
   const nascimento = new Date(dataNascimento);
   let idade = hoje.getFullYear() - nascimento.getFullYear();
   const mes = hoje.getMonth() - nascimento.getMonth();
-
-  if (mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())) {
-    idade--;
-  }
-
+  if (mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())) idade--;
   return idade;
 }
 
+// Rota principal (home)
 app.get('/', (req, res) => {
   const idade = calcularIdade('2005-06-09');
+  const dados = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
 
   res.render('index', {
     nome: 'Lucas Cassiano Pontes',
     email: 'lucasuqb@gmail.com',
     github: 'https://github.com/LucasCassiano1',
     linkedin: 'https://www.linkedin.com/in/lucas-cassiano-pontes-02b4a6301/',
-    idade: idade
+    idade: idade,
+    ...dados
   });
 });
 
-
+// Página de projetos
 app.get('/projetos', (req, res) => {
-  const projetos = [
-    {
-      nome: "Sistema de Gerenciamento de Alunos",
-      descricao: "Este projeto é um sistema de gerenciamento de alunos e histórico de peso desenvolvido em Java com Swing. Permite cadastrar, consultar, atualizar e excluir alunos, além de calcular e registrar o IMC. Os dados são persistidos em arquivos de texto, organizados por diretórios.",
-      tecnologias: ["Java", "Swing"],
-      github: "https://github.com/LucasCassiano1/Projeto-CRUD-Aluno"
-    },
-    {
-      nome: "IA para consultas em banco de dados",
-      descricao: "Este projeto consiste em uma IA desenvolvida em Python integrada ao Telegram. Através de um bot, o usuário podia enviar perguntas utilizando linguagem natural, e a IA realizava buscas em sites específicos da internet para responder diretamente no chat. A proposta visava facilitar o acesso a informações de forma rápida, simulando uma conversa inteligente via Telegram.",
-      github: "https://github.com/LucasCassiano1/bertoti-IHC"
-    },
-    {
-      nome: "Plataforma para feedback organizacional",
-      descricao: "Este sistema foi desenvolvido em grupo durante o projeto API (Aprendizado de Processos Integrados) pela equipe Byte-Benders, para a empresa Youtan. A aplicação, construída com React e TypeScript no frontend e Node.js/TypeORM no backend, tem como objetivo facilitar a coleta e análise de feedbacks entre líderes e liderados por meio de pesquisas internas. A plataforma conta com dashboards interativos, filtros inteligentes, diferentes níveis de acesso (admin, líder e liderado) e uma interface amigável que permite a visualização de resultados em tempo real. A ferramenta visa promover o bem-estar e a cultura organizacional da empresa.",
-      tecnologias: ["typescript", "react", "mysql", "html-css"],
-      github: "https://github.com/Byte-Benders-Fatec/sistema-youtan-front",
-      github: "https://github.com/Byte-Benders-Fatec/sistema-youtan-front"
-    },
-    {
-      nome:"Beauty Manager - Sistema de Gestão para Loja de Beleza",
-      descricao: "Desenvolvido como parte da disciplina de Programação Orientada a Objetos, o Beauty Manager é um sistema web construído com React e TypeScript, com foco na gestão de clientes e produtos de uma loja do segmento de beleza. aplicação permite o cadastro e listagem de clientes e produtos, além de oferecer funcionalidades analíticas, como:Visualização dos clientes que mais consumiram produtos/serviços;Listagens filtradas por gênero (tanto de clientes quanto de produtos);Identificação dos produtos mais consumidos Interface intuitiva e responsiva, ideal para uso em ambientes comerciais.O sistema foi idealizado para proporcionar uma gestão eficiente e organizada, atendendo às demandas do setor de beleza e bem-estar.",
-      tecnologias: ["typescript", "react","html-css"],
-      github: "https://github.com/Byte-Benders-Fatec/sistema-youtan-front",
-    }
-  ];
-
+  const dados = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+  const projetos = dados.projetos || [];
   res.render('projetos', { projetos });
 });
 
+
+// ---------------------------- ADMIN ------------------------------
+
+function autenticar(req, res, next) {
+  if (req.session.logado) return next();
+  return res.redirect('/admin/login');
+}
+
+app.get('/admin/login', (req, res) => {
+  res.render('login');
+});
+
+app.post('/admin/login', (req, res) => {
+  const { senha } = req.body;
+  if (senha === '1234') {
+    req.session.logado = true;
+    res.redirect('/admin');
+  } else {
+    res.send('Senha incorreta');
+  }
+});
+
+app.get('/admin', autenticar, (req, res) => {
+  const dados = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+  res.render('admin', dados);
+});
+
+app.post('/admin/excluir-projeto/:index', autenticar, (req, res) => {
+  const index = parseInt(req.params.index, 10);
+  const dados = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+
+  if (dados.projetos && dados.projetos[index]) {
+    dados.projetos.splice(index, 1); // remove 1 item no índice indicado
+    fs.writeFileSync(dataPath, JSON.stringify(dados, null, 2));
+  }
+
+  res.redirect('/admin');
+});
+
+
+// ---------- ROTAS DE ADIÇÃO (Admin) ----------
+
+app.post('/admin/adicionar-curso', autenticar, (req, res) => {
+  const { nome, ano } = req.body;
+  const dados = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+  dados.cursos = dados.cursos || [];
+  dados.cursos.push({ nome, ano });
+  fs.writeFileSync(dataPath, JSON.stringify(dados, null, 2));
+  res.redirect('/admin');
+});
+
+app.post('/admin/adicionar-formacao', autenticar, (req, res) => {
+  const { nome, inicio, fim } = req.body;
+  const dados = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+  dados.formacoes = dados.formacoes || [];
+  dados.formacoes.push({ nome, inicio, fim });
+  fs.writeFileSync(dataPath, JSON.stringify(dados, null, 2));
+  res.redirect('/admin');
+});
+
+app.post('/admin/adicionar-experiencia', autenticar, (req, res) => {
+  const { cargo, empresa, periodo, atividades } = req.body;
+  const dados = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+
+  const listaAtividades = atividades
+    .split('\n')
+    .map(a => a.trim())
+    .filter(a => a.length > 0);
+
+  dados.experiencias = dados.experiencias || [];
+  dados.experiencias.push({ cargo, empresa, periodo, atividades: listaAtividades });
+  fs.writeFileSync(dataPath, JSON.stringify(dados, null, 2));
+  res.redirect('/admin');
+});
+
+app.post('/admin/adicionar-tecnologia', autenticar, (req, res) => {
+  const { tipo, conteudo } = req.body;
+  const dados = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+  dados.tecnologias = dados.tecnologias || [];
+  dados.tecnologias.push({ tipo, conteudo });
+  fs.writeFileSync(dataPath, JSON.stringify(dados, null, 2));
+  res.redirect('/admin');
+});
+
+app.post('/admin/adicionar-idioma', autenticar, (req, res) => {
+  const { idioma, nivel } = req.body;
+  const dados = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+  dados.idiomas = dados.idiomas || [];
+  dados.idiomas.push({ idioma, nivel });
+  fs.writeFileSync(dataPath, JSON.stringify(dados, null, 2));
+  res.redirect('/admin');
+});
+
+app.post('/admin/adicionar-certificacao', autenticar, (req, res) => {
+  const { titulo, emissor, ano } = req.body;
+  const dados = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+  dados.certificacoes = dados.certificacoes || [];
+  dados.certificacoes.push({ titulo, emissor, ano });
+  fs.writeFileSync(dataPath, JSON.stringify(dados, null, 2));
+  res.redirect('/admin');
+});
+
+app.post('/admin/adicionar-projeto', autenticar, (req, res) => {
+  const { nome, descricao, tecnologias, github } = req.body;
+  const dados = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+
+  const listaTecnologias = tecnologias
+    .split(',')
+    .map(t => t.trim())
+    .filter(t => t !== '');
+
+  dados.projetos = dados.projetos || [];
+  dados.projetos.push({ nome, descricao, tecnologias: listaTecnologias, github });
+
+  fs.writeFileSync(dataPath, JSON.stringify(dados, null, 2));
+  res.redirect('/admin');
+});
+
+app.post('/admin/excluir-certificacao/:index', autenticar, (req, res) => {
+  const index = parseInt(req.params.index, 10);
+  const dados = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+  dados.certificacoes.splice(index, 1);
+  fs.writeFileSync(dataPath, JSON.stringify(dados, null, 2));
+  res.redirect('/admin');
+});
+
+app.post('/admin/excluir-tecnologia/:index', autenticar, (req, res) => {
+  const index = parseInt(req.params.index, 10);
+  const dados = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+  dados.tecnologias.splice(index, 1);
+  fs.writeFileSync(dataPath, JSON.stringify(dados, null, 2));
+  res.redirect('/admin');
+});
+
+app.post('/admin/excluir-experiencia/:index', autenticar, (req, res) => {
+  const index = parseInt(req.params.index, 10);
+  const dados = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+  dados.experiencias.splice(index, 1);
+  fs.writeFileSync(dataPath, JSON.stringify(dados, null, 2));
+  res.redirect('/admin');
+});
+
+app.post('/admin/excluir-curso/:index', autenticar, (req, res) => {
+  const index = parseInt(req.params.index, 10);
+  const dados = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+  dados.cursos.splice(index, 1);
+  fs.writeFileSync(dataPath, JSON.stringify(dados, null, 2));
+  res.redirect('/admin');
+});
+
+app.post('/admin/excluir-formacao/:index', autenticar, (req, res) => {
+  const index = parseInt(req.params.index, 10);
+  const dados = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+  dados.formacoes.splice(index, 1);
+  fs.writeFileSync(dataPath, JSON.stringify(dados, null, 2));
+  res.redirect('/admin');
+});
+
+app.post('/admin/excluir-idioma/:index', autenticar, (req, res) => {
+  const index = parseInt(req.params.index, 10);
+  const dados = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+  dados.idiomas.splice(index, 1);
+  fs.writeFileSync(dataPath, JSON.stringify(dados, null, 2));
+  res.redirect('/admin');
+});
+
+app.post('/admin/editar-formacao/:index', autenticar, (req, res) => {
+  const { nome, inicio, fim } = req.body;
+  const index = parseInt(req.params.index, 10);
+  const dados = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+  if (dados.formacoes[index]) {
+    dados.formacoes[index] = { nome, inicio, fim };
+    fs.writeFileSync(dataPath, JSON.stringify(dados, null, 2));
+  }
+  res.redirect('/admin');
+});
+
+app.post('/admin/editar-experiencia/:index', autenticar, (req, res) => {
+  const { cargo, empresa, periodo, atividades } = req.body;
+  const listaAtividades = atividades.split('\n').map(a => a.trim()).filter(Boolean);
+  const index = parseInt(req.params.index, 10);
+  const dados = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+  if (dados.experiencias[index]) {
+    dados.experiencias[index] = { cargo, empresa, periodo, atividades: listaAtividades };
+    fs.writeFileSync(dataPath, JSON.stringify(dados, null, 2));
+  }
+  res.redirect('/admin');
+});
+
+app.post('/admin/editar-tecnologia/:index', autenticar, (req, res) => {
+  const { tipo, conteudo } = req.body;
+  const index = parseInt(req.params.index, 10);
+  const dados = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+  if (dados.tecnologias[index]) {
+    dados.tecnologias[index] = { tipo, conteudo };
+    fs.writeFileSync(dataPath, JSON.stringify(dados, null, 2));
+  }
+  res.redirect('/admin');
+});
+
+app.post('/admin/editar-idioma/:index', autenticar, (req, res) => {
+  const { idioma, nivel } = req.body;
+  const index = parseInt(req.params.index, 10);
+  const dados = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+  if (dados.idiomas[index]) {
+    dados.idiomas[index] = { idioma, nivel };
+    fs.writeFileSync(dataPath, JSON.stringify(dados, null, 2));
+  }
+  res.redirect('/admin');
+});
+
+app.post('/admin/editar-certificacao/:index', autenticar, (req, res) => {
+  const { titulo, emissor, ano } = req.body;
+  const index = parseInt(req.params.index, 10);
+  const dados = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+  if (dados.certificacoes[index]) {
+    dados.certificacoes[index] = { titulo, emissor, ano };
+    fs.writeFileSync(dataPath, JSON.stringify(dados, null, 2));
+  }
+  res.redirect('/admin');
+});
+
+app.post('/admin/editar-projeto/:index', autenticar, (req, res) => {
+  const { nome, descricao, tecnologias, github } = req.body;
+  const listaTecnologias = tecnologias.split(',').map(t => t.trim()).filter(Boolean);
+  const index = parseInt(req.params.index, 10);
+  const dados = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+  if (dados.projetos[index]) {
+    dados.projetos[index] = { nome, descricao, tecnologias: listaTecnologias, github };
+    fs.writeFileSync(dataPath, JSON.stringify(dados, null, 2));
+  }
+  res.redirect('/admin');
+});
+
+// Inicia o servidor
 app.listen(port, () => {
   console.log(`Servidor rodando em http://localhost:${port}`);
 });
-    

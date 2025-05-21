@@ -1,0 +1,129 @@
+{
+  "formacoes": [
+    {
+      "nome": "FATEC São José dos Campos – Tecnólogo em Análise e Desenvolvimento de Sistemas",
+      "inicio": "Julho/2023",
+      "fim": "Dezembro/2026"
+    }
+  ],
+  "experiencias": [
+    {
+      "cargo": "Estágio em Programação",
+      "empresa": "Hunt Sales, SJC - SP",
+      "periodo": "Fev/2025 - Abr/2025",
+      "atividades": [
+        "Apoiei a equipe na análise e otimização de processos internos",
+        "Participei da criação de metodologias de melhoria contínua",
+        "Atuei como suporte para os clientes",
+        "Utilizei N8N, Python, JavaScript, APIs, webhooks e automatizadores"
+      ]
+    },
+    {
+      "cargo": "Desenvolvedor Front-end",
+      "empresa": "Freelancer, SJC-SP",
+      "periodo": "Jul/2024 - Jan/2025",
+      "atividades": [
+        "Criação de sites e aplicações web com React, JavaScript, HTML e CSS"
+      ]
+    }
+  ],
+  "tecnologias": [
+    {
+      "tipo": "Linguagens",
+      "conteudo": "JavaScript/TypeScript, HTML, CSS, Python, Java"
+    },
+    {
+      "tipo": "Bibliotecas",
+      "conteudo": "React, Node.js, Express.js"
+    },
+    {
+      "tipo": "Ferramentas",
+      "conteudo": "MySQL, Git/GitHub, Excel, n8n, Figma"
+    }
+  ],
+  "idiomas": [
+    {
+      "idioma": "Inglês",
+      "nivel": "Intermediário (B1)"
+    }
+  ],
+  "certificacoes": [
+    {
+      "titulo": "React",
+      "emissor": "Hora de Codar - Matheus Battisti",
+      "ano": "2025"
+    },
+    {
+      "titulo": "JavaScript (40h)",
+      "emissor": "Curso em Vídeo",
+      "ano": "2024"
+    },
+    {
+      "titulo": "Python 3: Do Básico ao Avançado",
+      "emissor": "Udemy",
+      "ano": "2023"
+    },
+    {
+      "titulo": "Excel Intermediário",
+      "emissor": "Fundação Bradesco / FATEC",
+      "ano": "2023"
+    },
+    {
+      "titulo": "Inglês Intermediário",
+      "emissor": "CEL, FATEC",
+      "ano": "2022-2023"
+    },
+    {
+      "titulo": "Montagem e Manutenção de Computadores",
+      "emissor": "Advanced",
+      "ano": "2022"
+    }
+  ],
+  "cursos": [
+    {
+      "nome": "Git e GitHub",
+      "ano": "2024"
+    }
+  ],
+  "projetos": [
+    {
+      "nome": "Sistema de Gerenciamento de Alunos",
+      "descricao": "Este projeto é um sistema de gerenciamento de alunos e histórico de peso desenvolvido em Java com Swing. Permite cadastrar, consultar, atualizar e excluir alunos, além de calcular e registrar o IMC. Os dados são persistidos em arquivos de texto, organizados por diretórios.",
+      "tecnologias": [
+        "Java",
+        "Swing"
+      ],
+      "github": "https://github.com/LucasCassiano1/Projeto-CRUD-Aluno"
+    },
+    {
+      "nome": "IA para consultas em banco de dados",
+      "descricao": "Este projeto consiste em uma IA desenvolvida em Python integrada ao Telegram. Através de um bot, o usuário podia enviar perguntas utilizando linguagem natural, e a IA realizava buscas em sites específicos da internet para responder diretamente no chat. A proposta visava facilitar o acesso a informações de forma rápida, simulando uma conversa inteligente via Telegram.",
+      "tecnologias": [
+        "Python",
+        "Telegram API"
+      ],
+      "github": "https://github.com/LucasCassiano1/bertoti-IHC"
+    },
+    {
+      "nome": "Plataforma para feedback organizacional",
+      "descricao": "Este sistema foi desenvolvido em grupo durante o projeto API (Aprendizado de Processos Integrados) pela equipe Byte-Benders, para a empresa Youtan. A aplicação, construída com React e TypeScript no frontend e Node.js/TypeORM no backend, tem como objetivo facilitar a coleta e análise de feedbacks entre líderes e liderados por meio de pesquisas internas. A plataforma conta com dashboards interativos, filtros inteligentes, diferentes níveis de acesso (admin, líder e liderado) e uma interface amigável que permite a visualização de resultados em tempo real. A ferramenta visa promover o bem-estar e a cultura organizacional da empresa.",
+      "tecnologias": [
+        "TypeScript",
+        "React",
+        "MySQL",
+        "HTML-CSS"
+      ],
+      "github": "https://github.com/Byte-Benders-Fatec/sistema-youtan-front"
+    },
+    {
+      "nome": "Beauty Manager - Sistema de Gestão para Loja de Beleza",
+      "descricao": "Desenvolvido como parte da disciplina de Programação Orientada a Objetos, o Beauty Manager é um sistema web construído com React e TypeScript, com foco na gestão de clientes e produtos de uma loja do segmento de beleza. A aplicação permite o cadastro e listagem de clientes e produtos, além de oferecer funcionalidades analíticas, como: visualização dos clientes que mais consumiram produtos/serviços; listagens filtradas por gênero (tanto de clientes quanto de produtos); identificação dos produtos mais consumidos. Interface intuitiva e responsiva, ideal para uso em ambientes comerciais. O sistema foi idealizado para proporcionar uma gestão eficiente e organizada, atendendo às demandas do setor de beleza e bem-estar.",
+      "tecnologias": [
+        "TypeScript",
+        "React",
+        "HTML-CSS"
+      ],
+      "github": "https://github.com/Byte-Benders-Fatec/sistema-youtan-front"
+    }
+  ]
+}

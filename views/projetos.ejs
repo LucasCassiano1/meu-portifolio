@@ -1,29 +1,26 @@
 <%- include('partials/header', { titulo: 'Meus Projetos' }) %>
 
-<main>
-  <section class="project">
-    <h2>Projetos Acadêmicos</h2>
+<main class="project-container">
+  <h2>Projetos Acadêmicos</h2>
 
-    <div class="projetos-grid">
-      <% projetos.forEach(projeto => { %>
-        <div class="card-projeto">
-          <h3><%= projeto.nome %></h3>
-          <p><%= projeto.descricao %></p>
+  <% if (projetos.length === 0) { %>
+    <p>Nenhum projeto cadastrado ainda.</p>
+  <% } else { %>
+    <% projetos.forEach(projeto => { %>
+      <div class="project-card">
+        <h3><%= projeto.nome %></h3>
+        <p><%= projeto.descricao %></p>
 
-          <% if (projeto.tecnologias && projeto.tecnologias.length > 0) { %>
-            <p><strong>Tecnologias:</strong> <%= projeto.tecnologias.join(', ') %></p>
-          <% } %>
+        <% if (projeto.tecnologias && projeto.tecnologias.length > 0) { %>
+          <p><strong>Tecnologias:</strong> <%= projeto.tecnologias.join(', ') %></p>
+        <% } %>
 
-          <% if (projeto.github) { %>
-            <a class="botao-link" href="<%= projeto.github %>" target="_blank">
-              🔗 Ver no GitHub
-            </a>
-          <% } %>
-        </div>
-      <% }) %>
-    </div>
-    
-  </section>
+        <% if (projeto.github) { %>
+          <a href="<%= projeto.github %>" class="github-link" target="_blank">🔗 Ver no GitHub</a>
+        <% } %>
+      </div>
+    <% }) %>
+  <% } %>
 </main>
 
 <%- include('partials/footer') %>

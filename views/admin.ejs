@@ -1,0 +1,136 @@
+<%- include('partials/header', { titulo: 'Admin - Painel de Controle' }) %>
+
+<main class="admin-form">
+
+  <nav class="subnav">
+    <a href="#formacao">Formações</a>
+    <a href="#experiencia">Experiências</a>
+    <a href="#tecnologia">Tecnologias</a>
+    <a href="#idioma">Idiomas</a>
+    <a href="#certificacao">Certificações</a>
+    <a href="#projeto">Projetos</a>
+  </nav>
+
+  <h2 id="formacao">Adicionar Formação Acadêmica</h2>
+  <form action="/admin/adicionar-formacao" method="POST">
+    <input name="nome" placeholder="Curso e Instituição" required />
+    <input name="inicio" placeholder="Início (ex: Julho/2023)" required />
+    <input name="fim" placeholder="Conclusão (ex: Dez/2026)" required />
+    <button type="submit">Adicionar</button>
+  </form>
+
+  <h3>Formações Acadêmicas</h3>
+  <% formacoes.forEach((formacao, index) => { %>
+    <form action="/admin/editar-formacao/<%= index %>" method="POST">
+      <input name="nome" value="<%= formacao.nome %>" required />
+      <input name="inicio" value="<%= formacao.inicio %>" required />
+      <input name="fim" value="<%= formacao.fim %>" required />
+      <button type="submit" class="btn-editar">Salvar</button>
+      <button type="submit" formaction="/admin/excluir-formacao/<%= index %>" formmethod="POST" class="btn-excluir" style="margin-left: 10px;">Excluir</button>
+    </form>
+    <br><br>
+  <% }) %>
+
+  <h2 id="experiencia">Adicionar Experiência Profissional</h2>
+  <form action="/admin/adicionar-experiencia" method="POST">
+    <input name="cargo" placeholder="Cargo" required />
+    <input name="empresa" placeholder="Empresa" required />
+    <input name="periodo" placeholder="Período" required />
+    <textarea name="atividades" placeholder="Uma por linha" required></textarea>
+    <button type="submit">Adicionar</button>
+  </form>
+
+  <h3>Experiências</h3>
+  <% experiencias.forEach((exp, index) => { %>
+    <form action="/admin/editar-experiencia/<%= index %>" method="POST">
+      <input name="cargo" value="<%= exp.cargo %>" required />
+      <input name="empresa" value="<%= exp.empresa %>" required />
+      <input name="periodo" value="<%= exp.periodo %>" required />
+      <textarea name="atividades"><%= exp.atividades.join('\n') %></textarea>
+      <button type="submit" class="btn-editar">Salvar</button>
+      <button type="submit" formaction="/admin/excluir-experiencia/<%= index %>" formmethod="POST" class="btn-excluir" style="margin-left: 10px;">Excluir</button>
+    </form>
+    <br><br>
+  <% }) %>
+
+  <h2 id="tecnologia">Adicionar Tecnologia</h2>
+  <form action="/admin/adicionar-tecnologia" method="POST">
+    <input name="tipo" placeholder="Tipo (ex: Linguagens)" required />
+    <input name="conteudo" placeholder="Conteúdo (ex: JavaScript, Git)" required />
+    <button type="submit">Adicionar</button>
+  </form>
+
+  <h3>Tecnologias</h3>
+  <% tecnologias.forEach((tecnologia, index) => { %>
+    <form action="/admin/editar-tecnologia/<%= index %>" method="POST">
+      <input name="tipo" value="<%= tecnologia.tipo %>" required />
+      <input name="conteudo" value="<%= tecnologia.conteudo %>" required />
+      <button type="submit" class="btn-editar">Salvar</button>
+      <button type="submit" formaction="/admin/excluir-tecnologia/<%= index %>" formmethod="POST" class="btn-excluir" style="margin-left: 10px;">Excluir</button>
+    </form>
+    <br><br>
+  <% }) %>
+
+  <h2 id="idioma">Adicionar Idioma</h2>
+  <form action="/admin/adicionar-idioma" method="POST">
+    <input name="idioma" placeholder="Idioma" required />
+    <input name="nivel" placeholder="Nível" required />
+    <button type="submit">Adicionar</button>
+  </form>
+
+  <h3>Idiomas</h3>
+  <% idiomas.forEach((idioma, index) => { %>
+    <form action="/admin/editar-idioma/<%= index %>" method="POST">
+      <input name="idioma" value="<%= idioma.idioma %>" required />
+      <input name="nivel" value="<%= idioma.nivel %>" required />
+      <button type="submit" class="btn-editar">Salvar</button>
+      <button type="submit" formaction="/admin/excluir-idioma/<%= index %>" formmethod="POST" class="btn-excluir" style="margin-left: 10px;">Excluir</button>
+    </form>
+    <br><br>
+  <% }) %>
+
+  <h2 id="certificacao">Adicionar Certificação ou Curso</h2>
+  <form action="/admin/adicionar-certificacao" method="POST">
+    <input name="titulo" placeholder="Título" required />
+    <input name="emissor" placeholder="Instituição" required />
+    <input name="ano" placeholder="Ano" required />
+    <button type="submit">Adicionar</button>
+  </form>
+
+  <h3>Certificações</h3>
+  <% certificacoes.forEach((cert, index) => { %>
+    <form action="/admin/editar-certificacao/<%= index %>" method="POST">
+      <input name="titulo" value="<%= cert.titulo %>" required />
+      <input name="emissor" value="<%= cert.emissor %>" required />
+      <input name="ano" value="<%= cert.ano %>" required />
+      <button type="submit" class="btn-editar">Salvar</button>
+      <button type="submit" formaction="/admin/excluir-certificacao/<%= index %>" formmethod="POST" class="btn-excluir" style="margin-left: 10px;">Excluir</button>
+    </form>
+    <br><br>
+  <% }) %>
+
+  <h2 id="projeto">Adicionar Projeto</h2>
+  <form action="/admin/adicionar-projeto" method="POST">
+    <input name="nome" placeholder="Nome do Projeto" required />
+    <textarea name="descricao" placeholder="Descrição do projeto" required></textarea>
+    <input name="tecnologias" placeholder="Tecnologias separadas por vírgula" required />
+    <input name="github" placeholder="Link do GitHub" required />
+    <button type="submit">Adicionar</button>
+  </form>
+
+  <h3>Projetos Cadastrados</h3>
+  <% projetos.forEach((projeto, index) => { %>
+    <form action="/admin/editar-projeto/<%= index %>" method="POST">
+      <input name="nome" value="<%= projeto.nome %>" required />
+      <textarea name="descricao" required><%= projeto.descricao %></textarea>
+      <input name="tecnologias" value="<%= projeto.tecnologias ? projeto.tecnologias.join(', ') : '' %>" required />
+      <input name="github" value="<%= projeto.github %>" required />
+      <button type="submit" class="btn-editar">Salvar</button>
+      <button type="submit" formaction="/admin/excluir-projeto/<%= index %>" formmethod="POST" class="btn-excluir" style="margin-left: 10px;">Excluir</button>
+    </form>
+    <br><br>
+  <% }) %>
+
+</main>
+
+<%- include('partials/footer') %>

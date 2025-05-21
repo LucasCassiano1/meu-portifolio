@@ -1,0 +1,12 @@
+<%- include('partials/header', { titulo: 'Login' }) %>
+
+<main>
+  <form action="/admin/login" method="POST">
+    <label>Senha:</label>
+    <input type="password" name="senha" required />
+    <button type="submit">Entrar</button>
+  </form>
+</main>
+
+<%- include('partials/footer') %>
+  
