@@ -1,70 +1,95 @@
 <%- include('partials/header', { titulo: 'Portfólio Acadêmico' }) %>
 
-<main>
-  <section class="card-section">
-    <h2>Sobre Mim</h2>
-    <p><strong>Nome:</strong> <%= nome %></p>
-    <p><strong>Idade:</strong> <%= idade %> anos</p>
-    <p><strong>Email:</strong> <%= email %></p>
-    <p>
-      <a href="<%= github %>" target="_blank" class="botao-link">🔗 GitHub</a>
-      <a href="<%= linkedin %>" target="_blank" class="botao-link">🔗 LinkedIn</a>
-    </p>
-  </section>
+  <main>
+    <section class="card-section">
+      <h2>Sobre Mim</h2>
+      <p><strong>Nome:</strong>
+        <%= nome %>
+      </p>
+      <p><strong>Idade:</strong>
+        <%= idade %> anos
+      </p>
+      <p><strong>Email:</strong>
+        <%= email %>
+      </p>
+      <p>
+        <a href="<%= github %>" target="_blank" class="botao-link">🔗 GitHub</a>
+        <a href="<%= linkedin %>" target="_blank" class="botao-link">🔗 LinkedIn</a>
+      </p>
+    </section>
 
-  <section class="card-section">
-    <h2>Objetivo</h2>
-    <p>
-      Aplicar minhas habilidades em desenvolvimento de software e análise de sistemas em projetos desafiadores, contribuindo para soluções eficientes e inovadoras, enquanto continuo evoluindo profissionalmente no mercado de Tecnologia da Informação.
-    </p>
-  </section>
+    <section class="card-section">
+      <h2>Objetivo</h2>
+      <p>
+        Aplicar minhas habilidades em desenvolvimento de software e análise de sistemas em projetos desafiadores,
+        contribuindo para soluções eficientes e inovadoras, enquanto continuo evoluindo profissionalmente no mercado de
+        Tecnologia da Informação.
+      </p>
+    </section>
 
-  <section class="card-section">
-    <h2>Formação Acadêmica</h2>
-    <% formacoes.forEach(f => { %>
-      <p><%= f.nome %></p>
-      <p><strong>Início:</strong> <%= f.inicio %> | <strong>Conclusão:</strong> <%= f.fim %></p>
-    <% }) %>
-  </section>
-
-  <section class="card-section">
-    <h2>Experiência Profissional</h2>
-    <% experiencias.forEach(exp => { %>
-      <h3><%= exp.empresa %> (<%= exp.periodo %>) – <%= exp.cargo %></h3>
-      <ul>
-        <% exp.atividades.forEach(atividade => { %>
-          <li><%= atividade %></li>
+    <section class="card-section">
+      <h2>Formação Acadêmica</h2>
+      <% formacoes.forEach(f=> { %>
+        <p>
+          <%= f.nome %>
+        </p>
+        <p><strong>Início:</strong>
+          <%= f.inicio %> | <strong>Conclusão:</strong>
+            <%= f.fim %>
+        </p>
         <% }) %>
+    </section>
+
+    <section class="card-section">
+      <h2>Experiência Profissional</h2>
+      <% experiencias.forEach(exp=> { %>
+        <h3>
+          <%= exp.empresa %> (<%= exp.periodo %>) – <%= exp.cargo %>
+        </h3>
+        <ul>
+          <% exp.atividades.forEach(atividade=> { %>
+            <li>
+              <%= atividade %>
+            </li>
+            <% }) %>
+        </ul>
+        <% }) %>
+    </section>
+
+    <section class="card-section">
+      <h2>Tecnologias</h2>
+      <ul>
+        <% tecnologias.forEach(tecnologia=> { %>
+          <li><strong>
+              <%= tecnologia.tipo %>:
+            </strong>
+            <%= tecnologia.conteudo %>
+          </li>
+          <% }) %>
       </ul>
-    <% }) %>
-  </section>
+    </section>
 
-  <section class="card-section">
-    <h2>Tecnologias</h2>
-    <ul>
-      <% tecnologias.forEach(tecnologia => { %>
-        <li><strong><%= tecnologia.tipo %>:</strong> <%= tecnologia.conteudo %></li>
-      <% }) %>
-    </ul>
-  </section>
+    <section class="card-section">
+      <h2>Idiomas</h2>
+      <ul>
+        <% idiomas.forEach(idioma=> { %>
+          <li>
+            <%= idioma.idioma %> – <%= idioma.nivel %>
+          </li>
+          <% }) %>
+      </ul>
+    </section>
 
-  <section class="card-section">
-    <h2>Idiomas</h2>
-    <ul>
-      <% idiomas.forEach(idioma => { %>
-        <li><%= idioma.idioma %> – <%= idioma.nivel %></li>
-      <% }) %>
-    </ul>
-  </section>
+    <section class="card-section">
+      <h2>Certificações e Cursos</h2>
+      <ul>
+        <% certificacoes.forEach(cert=> { %>
+          <li>
+            <%= cert.titulo %> – <%= cert.emissor %> (<%= cert.ano %>)
+          </li>
+          <% }) %>
+      </ul>
+    </section>
+  </main>
 
-  <section class="card-section">
-    <h2>Certificações e Cursos</h2>
-    <ul>
-      <% certificacoes.forEach(cert => { %>
-        <li><%= cert.titulo %> – <%= cert.emissor %> (<%= cert.ano %>)</li>
-      <% }) %>
-    </ul>
-  </section>
-</main>
-
-<%- include('partials/footer') %>
+  <%- include('partials/footer') %>

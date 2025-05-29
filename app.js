@@ -8,6 +8,7 @@ const port = 3000;
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
+
 app.use(express.urlencoded({ extended: true }));
 app.use(session({ secret: 'senhaSegura123', resave: false, saveUninitialized: true }));
 
@@ -53,7 +54,7 @@ function autenticar(req, res, next) {
 }
 
 app.get('/admin/login', (req, res) => {
-  res.render('login');
+  res.render('login', { erro: null });
 });
 
 app.post('/admin/login', (req, res) => {
@@ -62,9 +63,10 @@ app.post('/admin/login', (req, res) => {
     req.session.logado = true;
     res.redirect('/admin');
   } else {
-    res.send('Senha incorreta');
+    res.render('login', { erro: 'Senha incorreta!' });
   }
 });
+
 
 app.get('/admin', autenticar, (req, res) => {
   const dados = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
@@ -282,3 +284,4 @@ app.post('/admin/editar-projeto/:index', autenticar, (req, res) => {
 app.listen(port, () => {
   console.log(`Servidor rodando em http://localhost:${port}`);
 });
+

@@ -1,0 +1,79 @@
+@media (max-width: 984px) {
+  .header-flex {
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    text-align: center;
+  }
+
+  .header-flex h1 {
+    font-size: 1.75rem;
+    margin-bottom: 10px;
+  }
+
+  nav.main-nav {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 10px 0;
+    gap: 10px;
+  }
+
+  nav.main-nav a {
+    width: 90%;
+    font-size: 0.95rem;
+    padding: 12px;
+    min-width: unset;
+  }
+  .project-container h2 {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-top: 20px;
+  }
+
+  .project-card {
+    padding: 20px;
+  }
+
+  /* Subnav permanece horizontal e rolável */
+  nav.subnav {
+    max-width: 100%;
+    padding: 8px 10px;
+    border-radius: 5px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 8px;
+    padding: 10px 10px;
+    scroll-behavior: smooth;
+  }
+
+  nav.subnav::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  nav.subnav::-webkit-scrollbar-thumb {
+    background-color: #aaa;
+    border-radius: 10px;
+  }
+
+  nav.subnav a {
+    display: inline-block;
+    flex: 0 0 auto;
+    white-space: nowrap;
+    margin: 0 6px;
+    font-size: 0.85rem;
+    padding: 8px 14px;
+    text-align: center;
+  }
+}
+
+@media (min-width: 769px) {
+  nav a {
+    width: 160px;
+  }
+}
+
+

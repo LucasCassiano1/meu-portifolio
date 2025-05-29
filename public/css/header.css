@@ -1,0 +1,30 @@
+header {
+  background-color:  #000;
+  color: #fff;
+  padding: 20px 15px;
+}
+
+header h1 {
+  padding: 0px;
+  font-size: clamp(1.5rem, 4vw, 2.5rem); /* mínimo, escalável, máximo */
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+/* Flex para alinhar h1 à esquerda e nav à direita */
+.header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #000;
+  padding: 20px;  
+  color: white;
+}
+
+.header-flex h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  color: #fff; 
+}

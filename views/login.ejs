@@ -1,12 +1,18 @@
-<%- include('partials/header', { titulo: 'Login' }) %>
+<%- include('partials/header', { titulo: 'Login Admin' }) %>
 
-<main>
-  <form action="/admin/login" method="POST">
-    <label>Senha:</label>
-    <input type="password" name="senha" required />
-    <button type="submit">Entrar</button>
-  </form>
-</main>
+  <main style="max-width: 400px; margin: 60px auto;">
+    <h2 style="text-align: center;">Login do Administrador</h2>
 
-<%- include('partials/footer') %>
-  
+    <form action="/admin/login" method="POST">
+      <input type="password" name="senha" placeholder="Digite a senha" required />
+      <button type="submit">Entrar</button>
+    </form>
+
+    <% if (erro) { %>
+      <div class="alerta-erro">
+        <%= erro %>
+      </div>
+      <% } %>
+  </main>
+
+  <%- include('partials/footer') %>

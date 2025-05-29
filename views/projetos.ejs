@@ -1,7 +1,7 @@
 <%- include('partials/header', { titulo: 'Meus Projetos' }) %>
 
 <main class="project-container">
-  <h2>Projetos Acadêmicos</h2>
+  <h2 style="color: black;">Projetos Acadêmicos</h2>
 
   <% if (projetos.length === 0) { %>
     <p>Nenhum projeto cadastrado ainda.</p>
@@ -10,7 +10,7 @@
       <div class="project-card">
         <h3><%= projeto.nome %></h3>
         <p><%= projeto.descricao %></p>
-
+        
         <% if (projeto.tecnologias && projeto.tecnologias.length > 0) { %>
           <p><strong>Tecnologias:</strong> <%= projeto.tecnologias.join(', ') %></p>
         <% } %>
